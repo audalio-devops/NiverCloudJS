@@ -13,7 +13,7 @@ Projeto desenvolvido em Javascript, durante o evento [7 Days of Code de JavaScri
   - Javascript
   
 
-![](https://github.com/audalio-devops/api_rest_jsb/blob/main/DiagramaProjetoAPIRest.png)
+![](https://github.com/audalio-devops/NiverCloudJS/blob/master/NiverCloud.png)
 
 <h2>🚀 Desafios Diários</h2>
 
