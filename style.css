@@ -1,0 +1,33 @@
+*{
+    margin: 20;
+    padding: 0;
+}
+h1 {
+    color: aliceblue;
+    margin: 40px 0 40px 0;
+
+}
+
+body{
+    background-color: rgb(76, 63, 253);
+}
+
+.box, form{
+    gap: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: left;
+    align-items: left;
+}
+
+input {
+    width: 250px;
+    height: 30px;
+    border-radius: 30px;
+    padding: 0 15px 0 15px;
+}
+
+button {
+    width: 150px;
+    height: 25px;
+}
