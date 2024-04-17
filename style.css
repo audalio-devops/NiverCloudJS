@@ -31,3 +31,38 @@ button {
     width: 150px;
     height: 25px;
 }
+
+table {
+    font-size:12px;
+    color:#333333;
+    width:25%;
+    border-width: 1px;
+    border-color: #729ea5;
+    border-collapse: collapse;
+    margin-top: 10px;
+}
+
+th {
+    font-size:14px;
+    background-color: #acc8cc;
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #729ea5;
+    text-align:left;
+    color:blue;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+tr {
+    background-color:#d4e3e5;
+}
+
+td {
+    font-size:14px;
+    border-width: 1px;
+    padding: 8px;
+    border-style: solid;
+    border-color: #729ea5;
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+}

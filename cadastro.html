@@ -10,13 +10,14 @@
 </head>
     <div class="box">
         <h1>Cadastro de pessoas</h1>
-        <form class="form js-form">
+        <form id="form" class="form">
             <input class="name" id="name" minlength="3" maxlength="120" name="name" required type="text" placeholder="Nome" pattern="[A-Za-z]+">
             <input class="birth-date" id="birth-date" name="birth-date" required type="date" placeholder="Data de Aniversário">
 
             <button type="submit">Salvar</button>
         </form>
     </div>
+    <div id="tabelaPessoas"></div>
 </body>
 </html>
 

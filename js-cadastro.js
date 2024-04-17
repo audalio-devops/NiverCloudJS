@@ -2,6 +2,7 @@ const formulario = document.querySelector("form")
 const iName = document.querySelector(".name")
 const iBirthDate = document.querySelector(".birth-date")
 
+
 function cadastrar() {
     fetch("http://localhost:8080/usuarios", 
         {
@@ -24,11 +25,43 @@ function limpar() {
     iBirthDate.value = "";
 }
 
+function salvaLocalStorage() {
+
+    // var dataNiver = exibirDataFormatada(iBirthDate.value);
+
+    // Cria um objeto representando a pessoa
+    var pessoa = {
+        nome: iName.value,
+        dataNascimento: iBirthDate.value
+    };
+
+    // Recupera o array de pessoas do localStorage
+    var pessoasSalvas = localStorage.getItem('arpessoas');
+
+    // Verifica se há dados no localStorage
+    if (pessoasSalvas) {
+        // Converte a string JSON de volta para um array
+        var pessoas = JSON.parse(pessoasSalvas);
+    } else {
+        // Se não houver dados no localStorage, inicializa um novo array vazio
+        var pessoas = [];
+    }
+
+    // Acrescenta a nova pessoa ao array existente
+    pessoas.push(pessoa);
+
+    // Salva o array atualizado no localStorage
+    localStorage.setItem('arpessoas', JSON.stringify(pessoas));
+
+    // Exibe uma mensagem de confirmação
+    console.log("Pessoa salva localmente com sucesso!");
+}
+
 function exibirDataFormatada(vData) {
 
     var data = new Date(vData);
     
-    var dia = String(data.getDate() + 1).padStart(2,'0');
+    var dia = String(data.getDate()).padStart(2,'0');
     var mes = String(data.getMonth() + 1).padStart(2,'0'); // Os meses começam do zero, então adicionamos 1
     var ano = data.getFullYear();
 
@@ -36,15 +69,32 @@ function exibirDataFormatada(vData) {
     return dataFormatada;
 }
 
-formulario.addEventListener('submit', function(event) {
-    event.preventDefault();
+function exibirDadosPessoas() {
+    // Recupera o array de pessoas do localStorage
+    var pessoas = JSON.parse(localStorage.getItem('arpessoas')) || [];
 
-    var dataNiver = exibirDataFormatada(iBirthDate.value);
-    console.log(iName.value + ": " + dataNiver);
-        
-    //cadastrar();
-    //limpar();
-});
+    // Cria uma tabela HTML dinamicamente com os dados das pessoas
+    var tabelaHTML = "<table border='1'>" +
+                        "<tr>" +
+                            "<th>Nome</th>" +
+                            "<th>Data de Nascimento</th>" +
+                        "</tr>";
+
+    pessoas.forEach(function(pessoa) {
+        tabelaHTML += "<tr>" +
+                         "<td>" + pessoa.nome + "</td>" +
+                         "<td>" + pessoa.dataNascimento + "</td>" +
+                      "</tr>";
+    });
+
+    tabelaHTML += "</table>";
+
+    // Adiciona a tabela à div com o id 'tabelaPessoas'
+    document.getElementById('tabelaPessoas').innerHTML = tabelaHTML;
+}
+
+// Chama a função para exibir os dados da pessoa quando a página for carregada
+window.onload = exibirDadosPessoas;
 
 document.addEventListener("DOMContentLoaded", function() {
     var inputLetras = document.getElementById("name");
@@ -60,5 +110,21 @@ document.addEventListener("DOMContentLoaded", function() {
         }
     });
 });
+
+// Função que será chamada no evento submit do formulário
+formulario.addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    salvaLocalStorage()
+
+    // Exibe os dados atualizados na tabela
+    exibirDadosPessoas();
+       
+    //cadastrar();
+    //limpar();
+});
+
+
+
 
 // console.log(formulario)
