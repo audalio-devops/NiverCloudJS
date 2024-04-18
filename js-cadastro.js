@@ -1,33 +1,25 @@
 const formulario = document.querySelector("form")
 const iName = document.querySelector(".name")
 const iBirthDate = document.querySelector(".birth-date")
+const formularioTabela = document.querySelector("formTable")
+const pessoaList = document.getElementById('pessoa-list');
 
 
-function cadastrar() {
-    fetch("http://localhost:8080/usuarios", 
-        {
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            method: "POST",
-            body: JSON.stringify({
-                name: iName.value,
-                birthdate: iBirthDate.value            })
+function formatarData(vData) {
 
-        })
-        .then(function(res) { console.log(res)})
-        .catch(function(res) { console.log(res)})
-}
+    var data = new Date(vData);
+    
+    var dia = String(data.getDate()).padStart(2,'0');
+    var mes = String(data.getMonth() + 1).padStart(2,'0'); // Os meses começam do zero, então adicionamos 1
+    var ano = data.getFullYear();
 
-function limpar() {
-    iName.value = "";
-    iBirthDate.value = "";
+    var dataFormatada = dia + '/' + mes + '/' + ano;
+    return dataFormatada;
 }
 
 function salvaLocalStorage() {
 
-    // var dataNiver = exibirDataFormatada(iBirthDate.value);
+    // var dataNiver = formatarData(iBirthDate.value);
 
     // Cria um objeto representando a pessoa
     var pessoa = {
@@ -57,17 +49,6 @@ function salvaLocalStorage() {
     console.log("Pessoa salva localmente com sucesso!");
 }
 
-function exibirDataFormatada(vData) {
-
-    var data = new Date(vData);
-    
-    var dia = String(data.getDate()).padStart(2,'0');
-    var mes = String(data.getMonth() + 1).padStart(2,'0'); // Os meses começam do zero, então adicionamos 1
-    var ano = data.getFullYear();
-
-    var dataFormatada = dia + '/' + mes + '/' + ano;
-    return dataFormatada;
-}
 
 function exibirDadosPessoas() {
     // Recupera o array de pessoas do localStorage
@@ -95,10 +76,60 @@ function exibirDadosPessoas() {
     document.getElementById('tabelaPessoas').innerHTML = tabelaHTML;
 }
 
-// Chama a função para exibir os dados da pessoa quando a página for carregada
-window.onload = exibirDadosPessoas;
+    // Função para renderizar a tabela
+    function renderTable() {
+        pessoaList.innerHTML = '';
 
-document.addEventListener("DOMContentLoaded", function() {
+        // Carregar os dados do Local Storage
+        const pessoas = JSON.parse(localStorage.getItem('pessoas')) || [];
+
+        pessoas.forEach((pessoa, index) => {
+            const tr = document.createElement('tr');
+
+            // Coluna de Nome da Pessoa
+            const tdNome = document.createElement('td');
+            tdNome.textContent = pessoa.nome;
+
+            // Coluna de Data de Nascimento
+            const tdDataNascimento = document.createElement('td');
+            tdDataNascimento.textContent = pessoa.dataNascimento;
+
+            // Coluna de Ação
+            const tdAcao = document.createElement('td');
+            const btnEditar = document.createElement('button');
+            btnEditar.textContent = 'Editar';
+            btnEditar.addEventListener('click', () => editarPessoa(index));
+            btnEditar.className = 'buttonUpdTable';
+
+            const btnExcluir = document.createElement('button');
+            btnExcluir.textContent = 'Excluir';
+            btnExcluir.addEventListener('click', () => excluirPessoa(index));
+            btnExcluir.className = 'buttonExcTable';
+
+            tdAcao.appendChild(btnEditar);
+            tdAcao.appendChild(btnExcluir);
+
+            // Adicionando as colunas à linha
+            tr.appendChild(tdNome);
+            tr.appendChild(tdDataNascimento);
+            tr.appendChild(tdAcao);
+
+            // Adicionando a linha à tabela
+            pessoaList.appendChild(tr);
+        });
+    }
+
+
+function limpar() {
+    iName.value = "";
+    iBirthDate.value = "";
+}
+
+
+// Chama a função para exibir os dados da pessoa quando a página for carregada
+window.onload = renderTable();
+
+formulario.addEventListener("DOMContentLoaded", function() {
     var inputLetras = document.getElementById("name");
 
     inputLetras.addEventListener("input", function() {
@@ -120,12 +151,48 @@ formulario.addEventListener('submit', function(event) {
     salvaLocalStorage()
 
     // Exibe os dados atualizados na tabela
-    exibirDadosPessoas();
+    //exibirDadosPessoas();
        
     //cadastrar();
     //limpar();
 });
 
+formularioTabela.addEventListener('DOMContentLoaded', function() {
+
+    // Carregar os dados do Local Storage
+    const pessoas = JSON.parse(localStorage.getItem('arpessoas')) || [];
+
+    
+    // Função para editar uma pessoa
+    function editarPessoa(index) {
+        // Implemente a lógica de edição aqui
+        console.log('Editar pessoa de índice', index);
+        var pessoas = JSON.parse(localStorage.getItem('arpessoas')) || [];
+        const novaPessoa = { nome: 'Novo Nome 2', dataNascimento: '2000-02-02' };
+
+        // Verificar se o índice fornecido está dentro dos limites do array
+        if (index >= 0 && index < pessoas.length) {
+            // Substituir a pessoa no índice especificado
+            pessoas[index] = novaPessoa;
+
+            // Atualizar os dados no Local Storage
+            localStorage.setItem('arpessoas', JSON.stringify(pessoas));
+            renderTable();
+        } else {
+            console.error('Índice fora dos limites');
+        }
+
+    }
+
+    // Função para excluir uma pessoa
+    function excluirPessoa(index) {
+        // Implemente a lógica de exclusão aqui
+        console.log('Excluir pessoa de índice', index);
+    }
+
+    // Renderizar a tabela inicialmente
+    renderTable();
+});
 
 
 
