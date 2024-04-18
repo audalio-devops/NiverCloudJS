@@ -101,7 +101,7 @@ document.addEventListener("DOMContentLoaded", function() {
 
     inputLetras.addEventListener("input", function() {
         var valor = this.value.trim(); // Remove espaços em branco do início e do fim
-        var re = /^[A-Za-z]+$/; // Expressão regular para aceitar apenas letras
+        var re = /^[A-Za-zÀ-ÖØ-öø-ÿ\s']+$/; // Expressão regular para aceitar apenas letras
         
         if (!re.test(valor)) {
             this.setCustomValidity("Por favor, insira apenas letras.");
