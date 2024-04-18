@@ -80,7 +80,7 @@ function exibirDadosPessoas() {
         // Implemente a lógica de edição aqui
         console.log('Editar pessoa de índice', index);
         var pessoas = JSON.parse(localStorage.getItem('arpessoas')) || [];
-        const novaPessoa = { nome: 'Novo Nome 2', dataNascimento: '2000-02-02' };
+        const novaPessoa = { nome: iName.value, dataNascimento: iBirthDate.value };
 
         // Verificar se o índice fornecido está dentro dos limites do array
         if (index >= 0 && index < pessoas.length) {
@@ -108,7 +108,7 @@ function exibirDadosPessoas() {
         pessoaList.innerHTML = '';
 
         // Carregar os dados do Local Storage
-        const pessoas = JSON.parse(localStorage.getItem('pessoas')) || [];
+        const pessoas = JSON.parse(localStorage.getItem('arpessoas')) || [];
 
         pessoas.forEach((pessoa, index) => {
             const tr = document.createElement('tr');
