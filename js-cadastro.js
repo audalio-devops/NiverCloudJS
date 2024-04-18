@@ -1,7 +1,6 @@
 const formulario = document.querySelector("form")
 const iName = document.querySelector(".name")
 const iBirthDate = document.querySelector(".birth-date")
-const formularioTabela = document.querySelector("formTable")
 const pessoaList = document.getElementById('pessoa-list');
 
 
@@ -76,6 +75,34 @@ function exibirDadosPessoas() {
     document.getElementById('tabelaPessoas').innerHTML = tabelaHTML;
 }
 
+    // Função para editar uma pessoa
+    function editarPessoa(index) {
+        // Implemente a lógica de edição aqui
+        console.log('Editar pessoa de índice', index);
+        var pessoas = JSON.parse(localStorage.getItem('arpessoas')) || [];
+        const novaPessoa = { nome: 'Novo Nome 2', dataNascimento: '2000-02-02' };
+
+        // Verificar se o índice fornecido está dentro dos limites do array
+        if (index >= 0 && index < pessoas.length) {
+            // Substituir a pessoa no índice especificado
+            pessoas[index] = novaPessoa;
+
+            // Atualizar os dados no Local Storage
+            localStorage.setItem('arpessoas', JSON.stringify(pessoas));
+            renderTable();
+        } else {
+            console.error('Índice fora dos limites');
+        }
+
+    }
+
+    // Função para excluir uma pessoa
+    function excluirPessoa(index) {
+        // Implemente a lógica de exclusão aqui
+        console.log('Excluir pessoa de índice', index);
+    }
+
+
     // Função para renderizar a tabela
     function renderTable() {
         pessoaList.innerHTML = '';
@@ -132,6 +159,9 @@ window.onload = renderTable();
 formulario.addEventListener("DOMContentLoaded", function() {
     var inputLetras = document.getElementById("name");
 
+    // Carregar os dados do Local Storage
+    const pessoas = JSON.parse(localStorage.getItem('arpessoas')) || [];
+
     inputLetras.addEventListener("input", function() {
         var valor = this.value.trim(); // Remove espaços em branco do início e do fim
         var re = /^[A-Za-zÀ-ÖØ-öø-ÿ\s']+$/; // Expressão regular para aceitar apenas letras
@@ -142,6 +172,11 @@ formulario.addEventListener("DOMContentLoaded", function() {
             this.setCustomValidity("");
         }
     });
+   
+    // Renderizar a tabela inicialmente
+    renderTable();
+
+
 });
 
 // Função que será chamada no evento submit do formulário
@@ -156,44 +191,5 @@ formulario.addEventListener('submit', function(event) {
     //cadastrar();
     //limpar();
 });
-
-formularioTabela.addEventListener('DOMContentLoaded', function() {
-
-    // Carregar os dados do Local Storage
-    const pessoas = JSON.parse(localStorage.getItem('arpessoas')) || [];
-
-    
-    // Função para editar uma pessoa
-    function editarPessoa(index) {
-        // Implemente a lógica de edição aqui
-        console.log('Editar pessoa de índice', index);
-        var pessoas = JSON.parse(localStorage.getItem('arpessoas')) || [];
-        const novaPessoa = { nome: 'Novo Nome 2', dataNascimento: '2000-02-02' };
-
-        // Verificar se o índice fornecido está dentro dos limites do array
-        if (index >= 0 && index < pessoas.length) {
-            // Substituir a pessoa no índice especificado
-            pessoas[index] = novaPessoa;
-
-            // Atualizar os dados no Local Storage
-            localStorage.setItem('arpessoas', JSON.stringify(pessoas));
-            renderTable();
-        } else {
-            console.error('Índice fora dos limites');
-        }
-
-    }
-
-    // Função para excluir uma pessoa
-    function excluirPessoa(index) {
-        // Implemente a lógica de exclusão aqui
-        console.log('Excluir pessoa de índice', index);
-    }
-
-    // Renderizar a tabela inicialmente
-    renderTable();
-});
-
-
 
 // console.log(formulario)
