@@ -74,20 +74,22 @@ function exibirDadosPessoas() {
     var pessoas = JSON.parse(localStorage.getItem('arpessoas')) || [];
 
     // Cria uma tabela HTML dinamicamente com os dados das pessoas
-    var tabelaHTML = "<table border='1'>" +
+    var tabelaHTML = "<form id='formTable' class='formTable'><table border='1'>" +
                         "<tr>" +
                             "<th>Nome</th>" +
                             "<th>Data de Nascimento</th>" +
+                            "<th>Ações</th>" +
                         "</tr>";
 
     pessoas.forEach(function(pessoa) {
         tabelaHTML += "<tr>" +
                          "<td>" + pessoa.nome + "</td>" +
                          "<td>" + pessoa.dataNascimento + "</td>" +
+                         "<td><button class='buttonUpdTable'>Editar</button><button class='buttonExcTable'>Excluir</button></td>" +
                       "</tr>";
     });
 
-    tabelaHTML += "</table>";
+    tabelaHTML += "</table></form>";
 
     // Adiciona a tabela à div com o id 'tabelaPessoas'
     document.getElementById('tabelaPessoas').innerHTML = tabelaHTML;
