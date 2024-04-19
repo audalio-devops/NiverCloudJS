@@ -43,6 +43,7 @@ function salvaLocalStorage() {
 
     // Salva o array atualizado no localStorage
     localStorage.setItem('arpessoas', JSON.stringify(pessoas));
+    renderTable();
 
     // Exibe uma mensagem de confirmação
     console.log("Pessoa salva localmente com sucesso!");
