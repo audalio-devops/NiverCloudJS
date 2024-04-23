@@ -37,3 +37,8 @@ Chegando quase no final, você desenvolverá a parte visual do projeto. Você ir
 
 <h3>Dia 7</h3>
 No sétimo e último dia do desafio, você irá tornar a sua aplicação disponível de forma pública na internet. A sua tarefa será hospedar a sua página na nuvem, para que outras pessoas possam acessá-la e ela se torne acessível como um portfólio. Você irá fechar com chave de ouro!
+
+<h3>Resultado Final</h3>
+Ficou faltando implementar o Dia 6, mas o resultado já se encontra disponível na URL abaixo:
+
+https://audalio-devops.github.io/
